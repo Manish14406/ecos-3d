@@ -7,34 +7,34 @@ gsap.registerPlugin(ScrollTrigger);
 
 const features = [
   {
-    icon: '⬡',
-    label: 'Zero Core Gap',
-    description: 'Precision bonding with 0% void ensures uniform load distribution across the entire panel surface.',
+    icon: '⚡',
+    label: '0% Core Gap',
+    description: 'Strong & stable bonding ensuring zero void for uniform load distribution.',
   },
   {
-    icon: '◈',
-    label: 'BWP Certified',
-    description: 'Boiling Water Proof grade. Our phenolic film resists sustained moisture, humidity, and repeated concrete pours.',
+    icon: '📐',
+    label: 'Uniform Thickness',
+    description: 'Precision engineering for exact thickness, crucial for accurate concrete formwork.',
   },
   {
-    icon: '◻',
-    label: '60–80× Reuse',
-    description: 'High-density compression delivers industry-leading repetition cycles — lowering cost per pour significantly.',
+    icon: '🏗️',
+    label: 'High Load Bearing',
+    description: 'Exceptional capacity to withstand heavy concrete pours without bending or warping.',
   },
   {
-    icon: '⬤',
-    label: 'E1 Emission Standard',
-    description: 'Phenol Formaldehyde bonding within E1 emission limits. Safe for enclosed construction environments.',
+    icon: '💧',
+    label: 'Weather Resistance',
+    description: 'Excellent water and weather resistance for longevity in harsh outdoor environments.',
   },
   {
-    icon: '▲',
+    icon: '🛡️',
     label: 'Termite Resistant',
-    description: 'Full-core treatment ensures structural integrity against biological degradation throughout service life.',
+    description: 'Chemically treated to be termite and borer resistant, maintaining structural integrity.',
   },
   {
-    icon: '◯',
-    label: '100% Biodegradable',
-    description: 'Timber sourced from managed forests. Every panel is built to perform and designed to return to the earth.',
+    icon: '🔄',
+    label: 'Max Repetition',
+    description: 'Smooth finish for concrete casting and a maximum repetition guarantee under proper use.',
   },
 ];
 
@@ -57,7 +57,7 @@ function FeatureCard({ icon, label, description, index }: FeatureCardProps) {
         y: 0,
         duration: 0.7,
         ease: 'power3.out',
-        delay: index * 0.08,
+        delay: index * 0.1,
         scrollTrigger: {
           trigger: cardRef.current,
           start: 'top 85%',
@@ -71,22 +71,27 @@ function FeatureCard({ icon, label, description, index }: FeatureCardProps) {
   return (
     <div
       ref={cardRef}
-      className="group flex flex-col gap-4 p-6 border border-stone-800 hover:border-stone-600 bg-[#0a0a0a] hover:bg-[#111] transition-colors duration-300 cursor-default"
+      className="group flex flex-col gap-4 p-8 border border-stone-800 hover:border-red-900/50 bg-[#0a0a0a] hover:bg-[#110505] transition-all duration-500 cursor-default"
     >
-      <span className="text-red-600 text-2xl leading-none">{icon}</span>
-      <h3 className="text-white font-serif text-xl uppercase tracking-tight">{label}</h3>
-      <p className="text-stone-500 font-mono text-xs leading-relaxed">{description}</p>
+      <span className="text-red-600 text-3xl leading-none drop-shadow-md">{icon}</span>
+      <h3 className="text-white font-serif text-xl md:text-2xl uppercase tracking-tight">{label}</h3>
+      <p className="text-stone-400 font-mono text-xs md:text-sm leading-relaxed">{description}</p>
     </div>
   );
 }
 
 export default function Features() {
   const headingRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!headingRef.current) return;
+    if (!headingRef.current || !statsRef.current) return;
+    
     gsap.set(headingRef.current, { opacity: 0, y: 30 });
+    gsap.set(statsRef.current.children, { opacity: 0, y: 30 });
+
     const ctx = gsap.context(() => {
+      // Header animation
       gsap.to(headingRef.current, {
         opacity: 1,
         y: 0,
@@ -98,43 +103,57 @@ export default function Features() {
           toggleActions: 'play none none reverse',
         },
       });
+
+      // Stats animation
+      gsap.to(statsRef.current!.children, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: statsRef.current,
+          start: 'top 90%',
+          toggleActions: 'play none none reverse',
+        },
+      });
     });
     return () => ctx.revert();
   }, []);
 
   return (
-    <section className="w-full bg-[#050505] px-6 md:px-16 lg:px-24 py-32 border-t border-stone-900">
+    <section className="w-full bg-[#030303] px-6 md:px-16 lg:px-24 py-32 border-t border-stone-900">
 
       {/* Section Header */}
-      <div ref={headingRef} className="mb-16 max-w-xl">
-        <p className="text-red-500 font-mono text-[10px] uppercase tracking-[0.3em] mb-4">
-          Engineering Advantages
+      <div ref={headingRef} className="mb-16 max-w-2xl">
+        <p className="text-red-600 font-mono text-sm tracking-[0.3em] uppercase mb-4 opacity-80">
+          Crafted for Excellence
         </p>
-        <h2 className="text-white text-4xl md:text-5xl font-serif uppercase tracking-tight leading-tight">
-          Built Different.<br />Built to Last.
+        <h2 className="text-white text-5xl md:text-6xl lg:text-7xl font-serif uppercase tracking-tight leading-[0.9]">
+          Key Features & <br /> <span className="text-stone-500">Performance</span>
         </h2>
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-900">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-900 shadow-2xl">
         {features.map((f, i) => (
           <FeatureCard key={f.label} {...f} index={i} />
         ))}
       </div>
 
       {/* Bottom stats bar */}
-      <div className="mt-16 pt-8 border-t border-stone-900 grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div ref={statsRef} className="mt-16 pt-8 border-t border-stone-900 grid grid-cols-2 md:grid-cols-4 gap-8">
         {[
-          { stat: '720', unit: 'kg/m³', label: 'Core Density' },
-          { stat: '≥6', unit: 'MPa', label: 'Load Bearing' },
-          { stat: '0%', unit: '', label: 'Core Void' },
-          { stat: '80×', unit: '', label: 'Max Reuse' },
+          { stat: '100%', unit: '', label: 'Recyclable' },
+          { stat: '0%', unit: '', label: 'Core Gap' },
+          { stat: 'Max', unit: '', label: 'Repetitions' },
+          { stat: 'MUF/MR', unit: '& PF', label: 'Grades Available' },
         ].map(({ stat, unit, label }) => (
-          <div key={label}>
-            <p className="text-white font-serif text-3xl md:text-4xl tracking-tight">
+          <div key={label} className="flex flex-col items-start">
+            <p className="text-white font-serif text-3xl md:text-5xl tracking-tight">
               {stat}<span className="text-red-600 text-xl ml-1">{unit}</span>
             </p>
-            <p className="text-stone-600 font-mono text-[10px] uppercase tracking-widest mt-1">{label}</p>
+            <p className="text-stone-500 font-mono text-[10px] uppercase tracking-widest mt-2">{label}</p>
           </div>
         ))}
       </div>

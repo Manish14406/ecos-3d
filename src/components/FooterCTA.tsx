@@ -32,7 +32,7 @@ export default function FooterCTA() {
       '-=0.5'
     );
 
-    return () => tl.kill();
+    return () => { tl.kill(); };
   }, []);
 
   return (

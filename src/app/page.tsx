@@ -6,17 +6,18 @@ import Hero from '@/components/Hero';
 import ProductOverlay from '@/components/ProductOverlay';
 import PlywoodBoard from '@/components/PlywoodBoard';
 import Features from '@/components/Features';
-import FooterCTA from '@/components/FooterCTA';
+import ManufacturingJourney from '@/components/factory/ManufacturingJourney';
+import ContactFooter from '@/components/ContactFooter';
 
 export default function Home() {
   return (
-    <main className="bg-[#050505] text-white min-h-screen selection:bg-red-600 selection:text-white">
+    <main className="bg-[#030303] text-white min-h-screen selection:bg-red-600 selection:text-white">
       <SmoothScroll>
         
         <Header />
         <Hero />
         
-        {/* THE CINEMATIC PRODUCT TIMELINE (Scenes 02-04) */}
+        {/* THE 3D PLYWOOD PRODUCT SHOWCASE */}
         <div className="relative w-full h-[300vh]">
           <div className="sticky top-0 h-screen w-full z-0 pointer-events-auto">
             <Canvas camera={{ position: [0, 0, 12], fov: 45 }}>
@@ -28,10 +29,14 @@ export default function Home() {
           </div>
         </div>
 
+        {/* THE CINEMATIC MANUFACTURING JOURNEY */}
+        <ManufacturingJourney />
+
         {/* THE BUSINESS VALUE & APPLICATIONS */}
         <Features />
 
-        <FooterCTA />
+        {/* CONTACT, ADDRESS & FOOTER */}
+        <ContactFooter />
 
       </SmoothScroll>
     </main>

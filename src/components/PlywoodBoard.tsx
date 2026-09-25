@@ -75,7 +75,7 @@ export default function PlywoodBoard() {
       <directionalLight position={[5, 10, -5]} intensity={3} />
       <ambientLight intensity={0.5} />
       
-      <PresentationControls global polar={[-0.2, 0.2]} azimuth={[-0.2, 0.2]} config={{ mass: 2, tension: 400 }}>
+      <PresentationControls global polar={[-0.2, 0.2]} azimuth={[-0.2, 0.2]} snap>
         <group ref={groupRef} position={[0, 0, 0]} rotation={[0.5, -0.5, 0]}>
           
           <group ref={topLayerGroupRef} position={[0, 0.1, 0]}>
